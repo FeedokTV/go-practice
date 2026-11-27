@@ -77,7 +77,7 @@ func TestFanOut(t *testing.T) {
 
 		if r.URL.Path == "/err" {
 			w.WriteHeader(http.StatusInternalServerError)
-			w.Write([]byte(`{"status":"ok"}`))
+			w.Write([]byte(`{"status":"ok"}`)) //nolint:errcheck // expected for error, additional one won't be bad
 		}
 
 		if errors.Is(r.Context().Err(), context.Canceled) {
@@ -89,8 +89,8 @@ func TestFanOut(t *testing.T) {
 	urls := []string{ts.URL + "/hold", ts.URL + "/hold", ts.URL + "/err"}
 
 	err := FanOut(t.Context(), ts.Client(), urls)
-	if err.Error() != "oopsie!" {
-		t.Errorf("expected error: %s, got: %v", "oopsie!", err.Error())
+	if err.Error() != "oopsie" {
+		t.Errorf("expected error: %s, got: %v", "oopsie", err.Error())
 	}
 
 	ts.Close() // Blocks until every handler has returned

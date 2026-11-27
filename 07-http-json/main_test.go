@@ -27,7 +27,7 @@ func TestCreateUser(t *testing.T) {
 	CreateUser(w, req)
 
 	resp := w.Result()
-	defer resp.Body.Close()
+	defer resp.Body.Close() //nolint:errcheck // close will free resources no matter of consuming error
 
 	if resp.StatusCode != http.StatusCreated {
 		t.Fatalf("unexpected status, want: 201, got: %d", resp.StatusCode)
@@ -73,7 +73,7 @@ func TestCreateUserInvalidInput(t *testing.T) {
 	CreateUser(w, req)
 
 	resp := w.Result()
-	defer resp.Body.Close()
+	defer resp.Body.Close() //nolint:errcheck // close will free resources no matter of consuming error
 
 	if resp.StatusCode != http.StatusBadRequest {
 		t.Fatalf("unexpected status, want: 400, got: %d", resp.StatusCode)
@@ -97,7 +97,7 @@ func TestCreateUserInvalidRequestTwoJSON(t *testing.T) {
 	CreateUser(w, req)
 
 	resp := w.Result()
-	defer resp.Body.Close()
+	defer resp.Body.Close() //nolint:errcheck // close will free resources no matter of consuming error
 
 	if resp.StatusCode != http.StatusBadRequest {
 		t.Fatalf("unexpected status, want: 400, got: %d", resp.StatusCode)
@@ -121,7 +121,7 @@ func TestCreateUserInvalidRequestBrokenObject(t *testing.T) {
 	CreateUser(w, req)
 
 	resp := w.Result()
-	defer resp.Body.Close()
+	defer resp.Body.Close() //nolint:errcheck // close will free resources no matter of consuming error
 
 	if resp.StatusCode != http.StatusBadRequest {
 		t.Fatalf("unexpected status, want: 400, got: %d", resp.StatusCode)

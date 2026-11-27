@@ -99,10 +99,10 @@ func Request(ctx context.Context, client *http.Client, url string) error {
 	if err != nil {
 		return err
 	}
-	defer resp.Body.Close()
+	defer resp.Body.Close() //nolint:errcheck // close will free resources no matter of consuming error
 
 	if resp.StatusCode == http.StatusInternalServerError {
-		return errors.New("oopsie!")
+		return errors.New("oopsie")
 	}
 
 	return nil

@@ -33,7 +33,7 @@ func hashPassword(password string) (string, error) {
 
 func CreateUser(w http.ResponseWriter, r *http.Request) {
 	r.Body = http.MaxBytesReader(w, r.Body, 1<<20) // limit: 1MB
-	defer r.Body.Close()
+	defer r.Body.Close()                           //nolint:errcheck // close will free resources no matter of consuming error
 
 	var input UserCreateRequest
 

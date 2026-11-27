@@ -55,7 +55,7 @@ func breakableProcessor(n int) (func(Job) error, *int, *atomic.Int64) {
 		mu.Unlock()
 
 		if next := int(curCall); next > n {
-			return errors.New("oopsie!")
+			return errors.New("oopsie")
 		}
 
 		return nil
